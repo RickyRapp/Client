@@ -1,8 +1,8 @@
 //import CreateNewRestaurant from './forms/CreateNewRestaurant';
 import React, {useState, useRef} from 'react'; 
 //import DropDownNew from './dropdown';
-import UserInfo from './Components/Users';
-import AdminInfo from './Components/Admin';
+import UserInfo from './Components/UserInfo';
+import AdminInfo from './Components/AdminInfo';
 import Header from './Components/Header';
 import Route from './Components/Route'; 
  
