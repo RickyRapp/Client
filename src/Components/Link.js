@@ -8,7 +8,7 @@ const Link = ({ className, loginType, href, children }) => {
   const loggedState = useSelector(state => state.currentLoggedInAs) 
   //console.log(`loggedState ${loggedState}`)
 
-  const onClick = (event) => { 
+  const navigatePage = (event) => { 
     event.preventDefault();
     window.history.pushState({}, '', href);
 
@@ -18,7 +18,7 @@ const Link = ({ className, loginType, href, children }) => {
   };
 
   return (
-    <a style={{padding:'5px'}}  onClick={onClick} className={className} href={href}>
+    <a style={{padding:'5px'}}  onClick={navigatePage} className={className} href={href}>
       {children}
     </a>
   );
