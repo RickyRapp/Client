@@ -8,8 +8,8 @@ const AdminInfo = () => {
     return(
         <div>
         <div>Welcome! Please use the buttons below to add/edit categories and restaurants.</div>
-        <DropDownNew /><br />
-        <RestaurantMap /><RestaurantDetailAdmin /> 
+        <div style={{"display": "flex"}}><DropDownNew /></div><br />
+        <div style={{"display": "flex"}}><RestaurantDetailAdmin /> </div>
         </div>
     )
 }

@@ -2,23 +2,21 @@ import React, {useEffect, useState} from 'react';
 import CategoryOptions from './CategoryOptions';
 import {  useDispatch, connect } from 'react-redux'; 
 import axios from 'axios';
-import { setCategory, selectCategory } from '../actions'; 
+import { setCategory, selectCategory, selectRestaurant } from '../actions'; 
 
 const CategoryDropDown = props =>  { 
     const dispatch = useDispatch(); 
     const getCategories = async () => {
         console.log("got to the function")
         const response = await axios
-        .get('http://localhost:3001/categories/getCategories') 
+        .get('/categories/getCategories') 
         .catch((err) => {
             console.log("err",err)
         }) 
         dispatch(setCategory(response.data));
     }
-    useEffect(() => {
-    //    console.log("calling the function now")
-        getCategories()
-        console.log("calling the function now")
+    useEffect(() => { 
+        getCategories() 
     },[]) 
    
     console.log(props.categories)
@@ -37,7 +35,7 @@ const CategoryDropDown = props =>  {
         <div>
             <label>Select a Category</label>
             <select  onChange={e =>props.selectedCategory(e) } >
-                <option value="0">Select One</option>
+                <option>Select One</option>
                 {setOption}
             </select> 
             {props.currentLoggedInAs==='admin'?<CategoryOptions />:'' }
@@ -65,8 +63,8 @@ const mapDispatchToProps = (dispatch) => ({
         const categoryNum=e.target.childNodes[e.target.selectedIndex].getAttribute('value') 
         const categoryName=e.target.childNodes[e.target.selectedIndex].innerHTML  
         dispatch(selectCategory({categoryNum, id, categoryName}))
-      }
-   
+        dispatch(selectRestaurant(null))
+      }    
   })
   
 export default connect(mapStateToProps, mapDispatchToProps)(CategoryDropDown)

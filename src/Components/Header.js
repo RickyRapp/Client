@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 const Header = props => {  
     return(
         <div>   
-            <Link loginType="" href="/" className={props.currentLoggedInAs===null?"selected item":"item"}>
+            <Link loginType="" href="/" className={props.currentLoggedInAs===''?"selected item":"item"}>
                 Welcome!!!!
             </Link>
             <Link loginType="user" href="/user" className={props.currentLoggedInAs==='user'?"selected item":"item"}>
