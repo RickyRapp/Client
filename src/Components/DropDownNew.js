@@ -4,7 +4,7 @@ import RestaurantDropdown from './RestaurantDropdown'
 
 const DropDownNew = () => { 
     return (
-        <div>
+        <div style={{textAlign:"center"}}>
             <CategoryDropDown />
             <RestaurantDropdown />
         </div>

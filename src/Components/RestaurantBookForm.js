@@ -42,14 +42,9 @@ const RestaurantBookForm = props => {
              return;
          }
         
-          const newBooking = await fetch(`/bookings/addBooking`, { 
-         // headers: {"accepts":"application/json"},
+          const newBooking = await fetch(`/bookings/addBooking`, {  
           method:'POST',
-          headers: {"content-type":"application/json"},
-         // body: JSON.stringify(categoryName) 
-          //  headers: {"content-type":"application/json"},
-         // body: JSON.stringify(categoryName) 
-         // body: JSON.stringify(newRestaurantsInfo) 
+          headers: {"content-type":"application/json"}, 
           body: JSON.stringify({ newReservationName,newReservationDate,newReservationRestaurantNum }) 
     })
      try{

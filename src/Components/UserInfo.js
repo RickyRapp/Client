@@ -8,7 +8,7 @@ import Geocode from "react-geocode";
 const UserInfo = props => { 
     return(
         <div>
-            <div>Welcome! Please choose a category to view the list of restaurants!</div><br />
+            <div style={{"display": "flex"}}>Welcome! Please choose a category to view the list of restaurants!</div><br />
             <div style={{"display": "flex"}}><DropDownNew /></div><br /> 
         {
             props.currentRestaurant 

@@ -3,8 +3,9 @@ import Link from './Link'
 import {connect} from 'react-redux';
 
 const Header = props => {  
-    return(
-        <div>   
+    return(  
+        <div style={{textAlign:'center'}}>   
+            <br />
             <Link loginType="" href="/" className={props.currentLoggedInAs===''?"selected item":"item"}>
                 Welcome!!!!
             </Link>

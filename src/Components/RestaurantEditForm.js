@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { useSelector, useDispatch, connect } from 'react-redux';  
-import { updateRestaurant} from '../actions'; 
+import { updateRestaurant, setRestaurant} from '../actions'; 
+import axios from 'axios'
 
 const RestaurantEditForm = props => {
      
@@ -62,11 +63,7 @@ const RestaurantEditForm = props => {
           const newRestaurant = await fetch(`/restaurants/editRestaurant/${id}`, { 
          // headers: {"accepts":"application/json"},
           method:'PATCH',
-          headers: {"content-type":"application/json"},
-         // body: JSON.stringify(categoryName) 
-          //  headers: {"content-type":"application/json"},
-         // body: JSON.stringify(categoryName) 
-         // body: JSON.stringify(newRestaurantsInfo) 
+          headers: {"content-type":"application/json"}, 
           body: JSON.stringify({newRestaurantsInfo}) 
     })
      try{
@@ -74,8 +71,13 @@ const RestaurantEditForm = props => {
             setRestaurantName(""); 
             setRestaurantAddress("");  
             setMessage("updated successfully");
-            setShowButton(true)
-           // props.getCategories(); 
+            setShowButton(true)            
+            const response = await axios
+            .get('/restaurants/getRestaurants') 
+            .catch((err) => {
+                console.log("err",err)
+            })
+            setRestaurant(response.data);
         } 
         catch (err){
             setMessage(`There was an issue: ${err}`);

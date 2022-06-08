@@ -1,50 +1,35 @@
 // Action creator 
-import axios from 'axios';
-//import {createAction} from '@reduxjs/toolkit'
-import { actionTypes } from './Action-types';
-import { useDispatch } from 'react-redux';
+import axios from 'axios'; 
 
-export  const deleteCategories = async id => {
-  console.log("deleeting")
+export  const deleteCategories = async id => { 
   await axios.delete(`/categories/deleteCategory/${id}`) 
   .catch((err) => {
       console.log("err",err)
-  }) 
-  //getCategories();
-  //removeSelectedCategory(id);
+  })  
 }
-export  const deleteRestaurant = async id => {
-  console.log("deleeting restaurant"+id)
+export  const deleteRestaurant = async id => { 
   await axios.delete(`/restaurants/deleteRestaurants/${id}`) 
   .catch((err) => {
       console.log("err",err)
-  }) 
-  //getCategories();
-  //removeSelectedCategory(id);
+  })  
 }
-export  const updateCategories = async (id, category) => {
-  console.log("updating")
+export  const updateCategories = async (id, category) => { 
   await axios.patch(`/categories/editCategory/${id}`, { 
     headers: {"content-type":"application/json"},
     body: JSON.stringify(category) 
 }) 
   .catch((err) => {
       console.log("err",err)
-  }) 
-  //getCategories();
-  //removeSelectedCategory(id);
+  })  
 }
-export  const updateRestaurant = async (id, restaurant) => {
-  console.log("updating")
+export  const updateRestaurant = async (id, restaurant) => { 
   await axios.patch(`/restaurants/editRestaurant/${id}`, { 
     headers: {"content-type":"application/json"},
     body: JSON.stringify(restaurant) 
 }) 
   .catch((err) => {
       console.log("err",err)
-  }) 
-  //getCategories();
-  //removeSelectedCategory(id);
+  })  
 } 
 
 export  const getBookings = async () => {
@@ -73,31 +58,24 @@ export  const getRestaurants= async () => {
   })
   setRestaurant(response.data);
 }
-export const selectLoggedIn = ({payload}) => {
-  //console.log(`payload ${payload}`)
-    // Return an action
+export const selectLoggedIn = ({payload}) => { 
     return {
       type: 'LOGGED_IN',
       payload: payload
     };  
 };
-export const removeSelectedCategory = category => {
-  console.log("this is the delete selector")
+export const removeSelectedCategory = category => { 
   return {
     type: 'REMOVE_SELECTED_CATEGORY',
     payload: category,
   };
 };
 
-/// delete a category
-export const removeCategory = (id) => {
-  console.log("this is the first delete action") 
-  console.log(id)
+
+export const removeCategory = (id) => { 
   return (dispatch) => {
       axios.delete(`http://localhost:3001/categories/deleteCategory/${id}`)
-          .then(response => {
-            console.log("goetting here")
-              console.log(response);
+          .then(response => {  
               dispatch(removeSelectedCategory(id));
               dispatch(setCategory());
           })
@@ -118,23 +96,7 @@ export const setRestaurant = restaurant => {
         type: 'SET_RESTAURANT',
         payload: restaurant
       }
-}
-export const removeCategory2 = category => {
-      return{
-        type: actionTypes.REMOVE_SELECTED_CATEGORY,
-        payload: category
-      }
-}
-
-export const getCategories2 = () => {
-  return (dispatch) => {
-    console.log("getting categories")
-    axios.get('http://localhost:3001/categories')
-    .then(response => {
-      const categories = response.data;
-    }).catch(error=> {const erroMsg = error.message})
-  } 
-}
+} 
  
 
 export const selectCategory = category => {
@@ -149,37 +111,13 @@ export const selectCategory = category => {
     return {
       type: 'CATEGORY_ADDED'
     }
-  }
+  } 
 
-//export const selectCategoryUser = category => {
-    // Return an action
- //   return {
-   //   type: 'CATEGORY_SELECTED',
-    //  payload: category
-   // };
-  //};
-
-  export const selectRestaurant = restaurant => {
-    // Return an action
+  export const selectRestaurant = restaurant => { 
     return {
       type: 'RESTAURANT_SELECTED',
       payload: restaurant
     };
   };
 
-export const selectRestaurantAdmin = restaurantInfo => {
-    // Return an action
-    return {
-      type: 'ADMIN_RESTAURANT_SELECTED',
-      payload: restaurantInfo
-    };
-  };
-  
-export const selectRestaurantUser = restaurantInfo => {
-    // Return an action
-    return {
-      type: 'USER_RESTAURANT_SELECTED',
-      payload: restaurantInfo
-    };
-  };
-  
+ 

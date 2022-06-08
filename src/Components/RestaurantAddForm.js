@@ -1,17 +1,16 @@
 import React, {useEffect, useState} from 'react';
 import { useSelector, useDispatch, connect } from 'react-redux';  
-import { updateRestaurant} from '../actions'; 
+import { setRestaurant, updateRestaurant} from '../actions'; 
+import axios from 'axios'
 
 const RestaurantAddForm = props => {
      
+    const dispatch = useDispatch()
     const setOption = (props.categories).map((category) => {
         //console.log(option.selected)
         return (
-            <option 
-                //onChange={() => option.onSelectedChange(option)} 
-                //onClick={()=>onSelectChange(option)} 
-                value={category.categoryNum}
-                //id={category._id}
+            <option  
+                value={category.categoryNum} 
                 key={category._id}
                 >
                 {category.categoryName}
@@ -41,14 +40,9 @@ const RestaurantAddForm = props => {
          };  
          console.log(newAssociatedCategory)
         
-          const newRestaurant = await fetch(`/restaurants/addRestaurant`, { 
-         // headers: {"accepts":"application/json"},
+          const newRestaurant = await fetch(`/restaurants/addRestaurant`, {  
           method:'POST',
-          headers: {"content-type":"application/json"},
-         // body: JSON.stringify(categoryName) 
-          //  headers: {"content-type":"application/json"},
-         // body: JSON.stringify(categoryName) 
-         // body: JSON.stringify(newRestaurantsInfo) 
+          headers: {"content-type":"application/json"}, 
           body: JSON.stringify({newRestaurantsInfo}) 
     })
      try{
@@ -57,7 +51,12 @@ const RestaurantAddForm = props => {
             setRestaurantAddress("");  
             setMessage("updated successfully");
             setShowButton(true)
-           // props.getCategories(); 
+            const response = await axios
+            .get('/restaurants/getRestaurants') 
+            .catch((err) => {
+                console.log("err",err)
+            })
+            setRestaurant(response.data); 
         } 
         catch (err){
             setMessage(`There was an issue: ${err}`);
@@ -111,7 +110,7 @@ const RestaurantAddForm = props => {
     
     const mapDispatchToProps = dispatch => {
         return {
-            updateRestaurant: () => dispatch(updateRestaurant())
+            updateRestaurant: () => dispatch(updateRestaurant()) 
           }          
     }
 

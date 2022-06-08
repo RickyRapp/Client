@@ -11,7 +11,7 @@ const App = () => {
     <div>   
       <Header />
       <Route path="/">
-        <div>Welcome!!!</div>
+        <div>Welcome!</div>
       </Route>
       <Route path="/user">
         <UserInfo />

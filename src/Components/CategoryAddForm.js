@@ -1,11 +1,12 @@
 import React, {useState} from 'react';
 import { useSelector, useDispatch, connect } from 'react-redux'; 
-import { getCategories, addCategory } from '../actions'; 
+import { getCategories, setCategory } from '../actions'; 
+import axios from 'axios';
 
 const CategoryAddForm = props => {
     
     const [showButton, setShowButton] = useState(true);
-    const [category, setCategory] = useState("");
+    const [category, setNewCategory] = useState("");
     const [message, setMessage] = useState(""); 
     const dispatch = useDispatch();
 
@@ -21,9 +22,15 @@ const CategoryAddForm = props => {
     })
      try{
             //await newCategory();
-            setCategory(""); 
+            setNewCategory(""); 
             setMessage("Created successfully");
            // props.getCategories(); 
+           const response = await axios
+           .get('/categories/getCategories') 
+           .catch((err) => {
+               console.log("err",err)
+           }) 
+           dispatch(setCategory(response.data)); 
         } 
         catch (err){
             setMessage(`There was an issue: ${err}`);
@@ -38,7 +45,7 @@ const CategoryAddForm = props => {
             <button className="ui button" onClick={()=> setShowButton(false) }>Add a Category</button>
             :
             <form onSubmit={handleSubmit}>
-                <input onChange={(e) => setCategory(e.target.value)}
+                <input onChange={(e) => setNewCategory(e.target.value)}
                 type="text"
                 name="category"
                 value={category}

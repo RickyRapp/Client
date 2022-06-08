@@ -1,25 +1,25 @@
 import React, {useEffect, useState} from 'react';
 import { useSelector, useDispatch, connect } from 'react-redux';  
-import { getCategories, addCategory, updateCategories } from '../actions'; 
+import { setCategory, updateCategories } from '../actions'; 
+import axios from 'axios';
 
 const CategoryEditForm = props => {
      
     const currentCategoryName = props.currentCategory.categoryName
   //  console.log(currentCategoryName)
     const [showButton, setShowButton] = useState(true);
-    const [category, setCategory] = useState("");
+    const [category, setNewCategory] = useState("");
     const [message, setMessage] = useState("");  
+    const dispatch = useDispatch()
 
     useEffect(()=>{
-        setCategory(currentCategoryName)
+      setNewCategory(currentCategoryName)
     },[currentCategoryName]) 
 
     const handleSubmit = async e => {
           e.preventDefault();
           const categoryName = {category}
-          const id=props.currentCategory.id
-          console.log(categoryName)
-          console.log(id)
+          const id=props.currentCategory.id 
         
           const newCategory = await fetch(`http://localhost:3001/categories/editCategory/${id}`, {
           method:'PATCH',
@@ -30,9 +30,15 @@ const CategoryEditForm = props => {
     })
      try{
             //await newCategory();
-            setCategory(""); 
+            setNewCategory(""); 
             setMessage("updated successfully");
             setShowButton(true)
+            const response = await axios
+            .get('/categories/getCategories') 
+            .catch((err) => {
+                console.log("err",err)
+            }) 
+            dispatch(setCategory(response.data)); 
            // props.getCategories(); 
         } 
         catch (err){
@@ -48,7 +54,7 @@ const CategoryEditForm = props => {
             <button className="ui button" onClick={()=> setShowButton(false) }>Edit Category</button>
             :
             <form onSubmit={handleSubmit}>
-                <input onChange={(e) => setCategory(e.target.value)}
+                <input onChange={(e) => setNewCategory(e.target.value)}
                 type="text"
                 name="category"
                 value={category}
