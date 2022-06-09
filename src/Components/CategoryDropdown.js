@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';   
+import React, {useEffect} from 'react';   
 import CategoryOptions from './CategoryOptions';
 import {  useDispatch, connect } from 'react-redux'; 
 import axios from 'axios';
@@ -6,10 +6,9 @@ import { setCategory, selectCategory, selectRestaurant } from '../actions';
 
 const CategoryDropDown = props =>  { 
     const dispatch = useDispatch(); 
-    const getCategories = async () => {
-        console.log("got to the function")
+    const getCategories = async () => { 
         const response = await axios
-        .get('/categories/getCategories') 
+        .get('/categories') 
         .catch((err) => {
             console.log("err",err)
         }) 
@@ -18,8 +17,7 @@ const CategoryDropDown = props =>  {
     useEffect(() => { 
         getCategories() 
     },[]) 
-   
-    console.log(props.categories)
+    
     const setOption = (props.categories).map((category) => { 
         return (
             <option  
@@ -33,9 +31,9 @@ const CategoryDropDown = props =>  {
     })
     return ( 
         <div>
-            <label>Select a Category</label>
-            <select  onChange={e =>props.selectedCategory(e) } >
-                <option>Select One</option>
+            <label className="ui label">Select a Category</label>
+            <select value={!props.selectedCategoryNum?'-1':props.selectedCategoryNum.categoryNum} class="ui dropdown" onChange={e =>props.selectedCategory(e) } >
+                <option value='-1'>Select One</option>
                 {setOption}
             </select> 
             {props.currentLoggedInAs==='admin'?<CategoryOptions />:'' }

@@ -1,35 +1,26 @@
-import React, {useState} from "react";
-import CategoryAddForm from "./CategoryAddForm"; 
-import CategoryDelete from "./CategoryDelete";  
-import CategoryEditForm from './CategoryEditForm';
-import {connect, useDispatch} from 'react-redux';
-import {selectRestaurant , deleteRestaurant, deleteCategories} from '../actions'
-import axios from "axios";
+import React  from "react"; 
+import {connect} from 'react-redux';
+import {selectRestaurant , deleteRestaurant} from '../actions' 
 import RestaurantAddForm from "./RestaurantAddForm";
 import RestaurantEditForm from "./RestaurantEditForm";
 
-const RestaurantOptions = props => {
-    const dispatch = useDispatch();
-    const [showCategoryAddButton, setshowCategoryAddButton] = useState(true)
-    const [showCategoryViewButton, setshowCategoryViewButton] = useState(true)
+const RestaurantOptions = props => { 
  
     function AdminOptions(){
     return(
-        <div>
-            Restaurant Options:
-            <br />
-            <br />
+        <div style={{display:"flex", padding:"15px"}}> 
+            <br /> 
             <RestaurantAddForm />
             {
             !props.selectedRestaurant?
             '':
-            <div>
+            <>
                 <br />
                 <button className="ui button" onClick={()=> deleteRestaurant(props.selectedRestaurant.id)}>Delete Restaurant</button> 
                 <br />
                 <br />
                 <RestaurantEditForm />
-            </div>
+            </>
             }
         </div>
     )

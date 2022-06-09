@@ -1,40 +1,38 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {connect} from 'react-redux'; 
+import DatePicker from "react-datepicker"; 
+import "react-datepicker/dist/react-datepicker.css"; 
 
-const RestaurantDetailsUser = props=> {
-    console.log("here")
+const RestaurantDetailsUser = props=> { 
     const [showButton, setShowButton] = useState(true);
-    const [name, setName] = useState(""); 
-    const [date, setDate] = useState("");
-    const [message, setMessage] = useState(""); 
+    const [name, setName] = useState("");  
+    const [startDate, setStartDate] = useState(new Date());
+   // const [message, setMessage] = useState(""); 
 
     const handleSubmit = async e => {
         e.preventDefault();
         const newReservationName = name
-        const newReservationDate = date
+        const newReservationDate = startDate
         const newReservationRestaurantNum = props.currentRestaurant.restaurantNum
-        const newReservationInfo =  {
-          newReservationName,
-          newReservationDate,
-          newReservationRestaurantNum 
-       };   
+
 
        if(newReservationRestaurantNum===''){ 
            return;
        }
       
-        const newBooking = await fetch(`/bookings/addBooking`, {  
+        const newBooking = await fetch(`/bookings`, {  
         method:'POST',
         headers: {"content-type":"application/json"}, 
       //  headers: {"accepts":"application/json"}, 
-        body: JSON.stringify({          newReservationName,
+        body: JSON.stringify({ 
+            newReservationName,
             newReservationDate,
             newReservationRestaurantNum }) 
   })
    try{ 
           setName(""); 
-          setDate("");  
-          setMessage("updated successfully");
+          setStartDate("");  
+        //  setMessage("updated successfully");
           setShowButton(true) 
       } 
       catch (err){
@@ -54,7 +52,7 @@ const RestaurantDetailsUser = props=> {
             <testStuff />
             <React.Fragment>
                 {showButton ? 
-                <button onClick={()=> setShowButton(false) }>Add a booking!</button>
+                <button className="ui button" onClick={()=> setShowButton(false) }>Add a Booking!</button>
                 :
                 <form onSubmit={e => handleSubmit(e)}>
                  <div>
@@ -65,14 +63,11 @@ const RestaurantDetailsUser = props=> {
                     />
                 </div>
                 <div>
-                    <input onChange={(e) => setDate(e.target.value)}
-                    type="text" 
-                    value={date}
-                    placeholder="Date" 
-                    />
+                <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} /> 
+               
                 </div> 
-                <button type="submit">Save</button>
-                <button onClick={()=> setShowButton(true) }>Cancel</button> 
+                <button className="ui button" type="submit">Save</button>
+                <button className="ui button" onClick={()=> setShowButton(true) }>Cancel</button> 
                 </form> 
                 }
             </React.Fragment>

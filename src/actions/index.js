@@ -2,19 +2,19 @@
 import axios from 'axios'; 
 
 export  const deleteCategories = async id => { 
-  await axios.delete(`/categories/deleteCategory/${id}`) 
+  await axios.delete(`/categories/${id}`) 
   .catch((err) => {
       console.log("err",err)
   })  
 }
 export  const deleteRestaurant = async id => { 
-  await axios.delete(`/restaurants/deleteRestaurants/${id}`) 
+  await axios.delete(`/restaurants/${id}`) 
   .catch((err) => {
       console.log("err",err)
   })  
 }
 export  const updateCategories = async (id, category) => { 
-  await axios.patch(`/categories/editCategory/${id}`, { 
+  await axios.patch(`/categories/${id}`, { 
     headers: {"content-type":"application/json"},
     body: JSON.stringify(category) 
 }) 
@@ -23,7 +23,7 @@ export  const updateCategories = async (id, category) => {
   })  
 }
 export  const updateRestaurant = async (id, restaurant) => { 
-  await axios.patch(`/restaurants/editRestaurant/${id}`, { 
+  await axios.patch(`/restaurants/${id}`, { 
     headers: {"content-type":"application/json"},
     body: JSON.stringify(restaurant) 
 }) 
@@ -34,7 +34,7 @@ export  const updateRestaurant = async (id, restaurant) => {
 
 export  const getBookings = async () => {
   const response = await axios
-  .get('/bookings/getBookings') 
+  .get('/bookings') 
   .catch((err) => {
       console.log("err",err)
   })
@@ -43,7 +43,7 @@ export  const getBookings = async () => {
 
 export  const getCategories = async () => {
   const response = await axios
-  .get('/categories/getCategories') 
+  .get('/categories') 
   .catch((err) => {
       console.log("err",err)
   })
@@ -52,7 +52,7 @@ export  const getCategories = async () => {
 
 export  const getRestaurants= async () => {
   const response = await axios
-  .get('/restaurants/getRestaurants') 
+  .get('/restaurants') 
   .catch((err) => {
       console.log("err",err)
   })
@@ -74,7 +74,7 @@ export const removeSelectedCategory = category => {
 
 export const removeCategory = (id) => { 
   return (dispatch) => {
-      axios.delete(`http://localhost:3001/categories/deleteCategory/${id}`)
+      axios.delete(`http://localhost:3001/categories/${id}`)
           .then(response => {  
               dispatch(removeSelectedCategory(id));
               dispatch(setCategory());

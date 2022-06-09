@@ -4,9 +4,11 @@ import {selectLoggedIn} from '../actions';
 
 
 const Link = ({ className, loginType, href, children }) => {
+  const currentPath = window.location.pathname.slice(1)
   const dispatch = useDispatch();
   const loggedState = useSelector(state => state.currentLoggedInAs) 
-  //console.log(`loggedState ${loggedState}`)
+  const newLoggedInAs = !loginType && currentPath ? currentPath : loginType 
+ 
 
   const navigatePage = (event) => { 
     event.preventDefault();
@@ -14,21 +16,18 @@ const Link = ({ className, loginType, href, children }) => {
 
     const navEvent = new PopStateEvent('popstate');
     window.dispatchEvent(navEvent);
-    dispatch(selectLoggedIn({type: 'LOGGED_IN', payload: loginType}));
+    dispatch(selectLoggedIn({type: 'LOGGED_IN', payload: newLoggedInAs}));
   };
-
+ 
   return (
     <a style={{padding:'5px'}}  onClick={navigatePage} className={className} href={href}>
       {children}
     </a>
   );
 };
-
-//getting info?
-const mapStateToProps = state => { 
-  console.log(state)
+ 
+const mapStateToProps = state => {  
   return { loggedInAs: state.loggedInAs };
 };
-
-//export default Link;
+ 
 export default connect(mapStateToProps, {selectLoggedIn} )(Link)

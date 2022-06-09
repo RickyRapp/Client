@@ -8,8 +8,7 @@ import Geocode from "react-geocode";
 
 
 const AnyReactComponent = ({ text }) => <div>{text}</div>;
-const Map = props => {
-  console.log(props)
+const Map = props => { 
   const [thislng, setThislng] = useState(null)
   const [thislat, setThislat] = useState(null) 
   const [currentLng, setCurrentlng] = useState(null)
@@ -18,8 +17,7 @@ const Map = props => {
   const [allRestaurantCoords, setAllRestaurantCoords] = useState([]) 
   
   function getCoords (){  
-    return props.restaurants.restaurants.map(function (restaurant)  {
-      console.log(setCurrentlat) 
+    return props.restaurants.restaurants.map(function (restaurant)  { 
       Geocode.setApiKey("AIzaSyByvZEhbhUOwuNnMkiOmz6LRDG9hmz2BnM")
       Geocode.enableDebug();
       const address = restaurant.address; 
@@ -41,12 +39,9 @@ const Map = props => {
 
   useEffect(() =>{
     setAllRestaurantCoords([])
-    getCoords();
-    console.log(props.currentRestaurant) 
+    getCoords(); 
     Geocode.setApiKey("AIzaSyByvZEhbhUOwuNnMkiOmz6LRDG9hmz2BnM")
-    Geocode.enableDebug(); 
-   // setCurrentlng(null)
-    //setCurrentlat(null) 
+    Geocode.enableDebug();  
     const address = !props.currentRestaurant?"1777 Ave of the States, Lakewood, NJ 08701":props.currentRestaurant.address
     Geocode.fromAddress(address).then(
       (response) => {
@@ -61,10 +56,7 @@ const Map = props => {
       }
     ); 
   },[props.currentRestaurant]) 
-
- // return() => { 
-   console.log(allRestaurantCoords)
-      console.log("returning map")
+  
     return (
       <div className="c-map" style={{ height: '50vh', width: '50%' }}> 
         <GoogleMapReact 

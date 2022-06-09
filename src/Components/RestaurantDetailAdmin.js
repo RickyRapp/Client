@@ -1,29 +1,25 @@
 //import { options } from 'nodemon/lib/config';
 
 import React, {useState, useEffect} from 'react';
-import {connect} from 'react-redux';
-import testStuff from './Test';
+import {connect} from 'react-redux'; 
 import axios from 'axios';
 import moment from 'moment';
 
 const RestaurantDetailsAdmin = props => {
     const [showButton, setShowButton] = useState(true);
-    const [allBookings, setallBookings] = useState(''); 
-    console.log(props.currentRestaurant)
+    const [allBookings, setallBookings] = useState([]);  
   
     useEffect(() => { 
         getBookings() 
     },[props.currentRestaurant]) 
 
-    const getBookings = async () => { 
-        console.log(props.currentRestaurant)
+    const getBookings = async () => {  
         if(!props.currentRestaurant){
             return;
         }
-        const restaurantNum = props.currentRestaurant.restaurantNum
-        console.log(restaurantNum)
+        const restaurantNum = props.currentRestaurant.restaurantNum 
         const response = await axios
-        .get(`/bookings/getBooking?restaurantNum=${restaurantNum}`) 
+        .get(`/bookings?restaurantNum=${restaurantNum}`) 
         .catch((err) => {
             console.log("err",err)
         }) 
@@ -32,22 +28,15 @@ const RestaurantDetailsAdmin = props => {
     if(!props.currentRestaurant){
         return <div>Select a Restaurant!</div>
     }
-
-    const restaurantNum = props.currentRestaurant.restaurantNum
-    const handleSubmit = e => {
-
-        e.preventDefault();
-        setShowButton(true);
-    }
-    console.log(allBookings)
+  
     return(
         <div>
-            <h3>Restaurant Details</h3>
+            <h1 className="ui header">Restaurant Details</h1>
             <p>
                 Name:{props.currentRestaurant.name}<br />
                 Address:{props.currentRestaurant.address}
             </p>  
-            <h2>Bookings:</h2> 
+            <h2 className="ui header">Bookings:</h2> 
             <div>
                 {allBookings?allBookings.map((booking)=>{
                     var date=booking.date
@@ -61,8 +50,7 @@ const RestaurantDetailsAdmin = props => {
     )
 }
 
-const mapStateToProps = (state) => {
-    console.log(state)
+const mapStateToProps = (state) => { 
     return {
         currentRestaurant: state.currentRestaurant
     }

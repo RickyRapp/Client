@@ -2,33 +2,25 @@ import React, {useEffect, useState} from 'react';
 import { useSelector, useDispatch, connect } from 'react-redux';  
 import { updateRestaurant, setRestaurant} from '../actions'; 
 import axios from 'axios'
+import Geocode from "react-geocode"; 
 
 const RestaurantEditForm = props => {
      
-    const setOption = (props.categories).map((category) => {
-        //console.log(option.selected)
+    const setOption = (props.categories).map((category) => { 
         return (
-            <option 
-                //onChange={() => option.onSelectedChange(option)} 
-                //onClick={()=>onSelectChange(option)} 
-                value={category.categoryNum}
-                //id={category._id}
+            <option  
+                value={category.categoryNum} 
                 key={category._id}
                 >
                 {category.categoryName}
             </option>
         )
     })
-
- //   if(!props.currentRestaurant){
-  //      return <div>Select a Restaurant!</div>
-  //  }
-  //  console.log(props)
+ 
     const currentRestaurantName = props.currentRestaurant.name
     const currentRestaurantAddress = props.currentRestaurant.address
     const currentAssociatedCategory = props.currentRestaurant.categoryNum
-    const id = props.currentRestaurant.id
-  //  console.log(currentCategoryName)
+    const id = props.currentRestaurant.id 
     const [showButton, setShowButton] = useState(true);
     const [restaurantName, setRestaurantName] = useState("");
     const [restaurantAddress, setRestaurantAddress] = useState("");
@@ -41,30 +33,37 @@ const RestaurantEditForm = props => {
         setAssociatedCategory(currentAssociatedCategory)
     },[currentRestaurantName, currentRestaurantAddress, currentAssociatedCategory])  
 
-
-
-    console.log(associatedCategory)
+ 
     const handleSubmit = async e => {
           e.preventDefault();
-          const newRestaurantName = {restaurantName}
-          const newRestaurantAddress = {restaurantAddress}
-          const newAssociatedCategory = {associatedCategory} 
+          const newRestaurantName = restaurantName
+          const newRestaurantAddress = restaurantAddress
+          const newAssociatedCategory = associatedCategory
           const newRestaurantsInfo =  {
             'newRestaurantAddress'  :    newRestaurantAddress,
             'newAssociatedCategory' :    newAssociatedCategory,
             'newRestaurantName'     :    newRestaurantName 
          };   
          
-
-
-         
-         console.log(newAssociatedCategory)
+         Geocode.setApiKey("AIzaSyByvZEhbhUOwuNnMkiOmz6LRDG9hmz2BnM")
+         Geocode.enableDebug();
+         const address = newRestaurantAddress;  
+         Geocode.fromAddress(address).then(
+           (response) => {  
+             console.log(response.status) 
+           },
+           (error) => {
+             console.error(`error:${error}`); 
+             setMessage("invalid address")
+             return; 
+             console.log(error.status)
+           }
+         ); 
         
-          const newRestaurant = await fetch(`/restaurants/editRestaurant/${id}`, { 
-         // headers: {"accepts":"application/json"},
+          const newRestaurant = await fetch(`/restaurants/${id}`, {  
           method:'PATCH',
           headers: {"content-type":"application/json"}, 
-          body: JSON.stringify({newRestaurantsInfo}) 
+          body: JSON.stringify(newRestaurantsInfo) 
     })
      try{
             //await newCategory();
@@ -73,7 +72,7 @@ const RestaurantEditForm = props => {
             setMessage("updated successfully");
             setShowButton(true)            
             const response = await axios
-            .get('/restaurants/getRestaurants') 
+            .get('/restaurants') 
             .catch((err) => {
                 console.log("err",err)
             })

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { useSelector, useDispatch, connect } from 'react-redux';  
+import {  useDispatch, connect } from 'react-redux';  
 import { setCategory, updateCategories } from '../actions'; 
 import axios from 'axios';
 
@@ -18,15 +18,13 @@ const CategoryEditForm = props => {
 
     const handleSubmit = async e => {
           e.preventDefault();
-          const categoryName = {category}
+          const categoryName = category
           const id=props.currentCategory.id 
         
-          const newCategory = await fetch(`http://localhost:3001/categories/editCategory/${id}`, {
-          method:'PATCH',
-          //headers: {"accepts":"application/json"},
-            headers: {"content-type":"application/json"},
-         // body: JSON.stringify(categoryName) 
-          body: JSON.stringify(categoryName) 
+          const newCategory = await fetch(`/categories/${id}`, {
+          method:'PATCH', 
+          headers: {"content-type":"application/json"}, 
+          body: JSON.stringify({categoryName}) 
     })
      try{
             //await newCategory();
@@ -34,7 +32,7 @@ const CategoryEditForm = props => {
             setMessage("updated successfully");
             setShowButton(true)
             const response = await axios
-            .get('/categories/getCategories') 
+            .get('/categories') 
             .catch((err) => {
                 console.log("err",err)
             }) 

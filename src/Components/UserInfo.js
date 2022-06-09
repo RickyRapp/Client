@@ -1,21 +1,21 @@
-import React, {useState, useEffect} from "react";
+import React  from "react";
 import DropDownNew from './DropDownNew';
 import RestaurantDetailsUser from "./RestaurantDetailsUser";
 import RestaurantMap from "./RestaurantMap";
-import {connect} from 'react-redux';
-import Geocode from "react-geocode";
+import {connect} from 'react-redux'; 
 
 const UserInfo = props => { 
     return(
         <div>
-            <div style={{"display": "flex"}}>Welcome! Please choose a category to view the list of restaurants!</div><br />
-            <div style={{"display": "flex"}}><DropDownNew /></div><br /> 
+            <br />
+            <div className="ui header" style={{"display": "flex", justifyContent: "center"}}>Welcome! Please choose a category to view the list of restaurants!</div><br />
+            <div style={{"display": "flex", justifyContent: "center"}}><DropDownNew /></div><br /> 
         {
             props.currentRestaurant 
             ?
-            <div style={{"display": "flex"}}><RestaurantMap restaurants={props.restaurants} /><RestaurantDetailsUser /> </div>
+            <div style={{"display": "flex", justifyContent: "center"}}><RestaurantMap restaurants={props.restaurants} /><RestaurantDetailsUser /> </div>
             :
-            'Please select a restaurant'}
+            <div style={{"display": "flex", justifyContent: "center"}}>Please select a restaurant</div>}
         </div>
     )
 }

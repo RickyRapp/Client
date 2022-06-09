@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { useSelector, useDispatch, connect } from 'react-redux'; 
+import { useDispatch, connect } from 'react-redux'; 
 import { getCategories, setCategory } from '../actions'; 
 import axios from 'axios';
 
@@ -15,18 +15,18 @@ const CategoryAddForm = props => {
           const categoryName = {category}
           console.log(categoryName)
         
-            const newCategory = await fetch('http://localhost:3001/categories/addCategory', {
+            const newCategory = await fetch('http://localhost:3001/categories', {
             method:'POST',
             headers: {"content-type":"application/json"},
             body: JSON.stringify(categoryName) 
     })
      try{
-            //await newCategory();
+         
             setNewCategory(""); 
-            setMessage("Created successfully");
-           // props.getCategories(); 
+            setMessage("Created successfully"); 
+            setShowButton(true)
            const response = await axios
-           .get('/categories/getCategories') 
+           .get('/categories') 
            .catch((err) => {
                console.log("err",err)
            }) 

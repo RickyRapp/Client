@@ -1,13 +1,13 @@
-import React, {useEffect, useState} from 'react';
-import { useSelector, useDispatch, connect } from 'react-redux';  
+import React, { useState} from 'react';
+import GoogleMapReact from 'google-map-react';
+import { useDispatch, connect } from 'react-redux';  
 import { setRestaurant, updateRestaurant} from '../actions'; 
 import axios from 'axios'
+import Geocode from "react-geocode"; 
 
 const RestaurantAddForm = props => {
-     
-    const dispatch = useDispatch()
-    const setOption = (props.categories).map((category) => {
-        //console.log(option.selected)
+      
+    const setOption = (props.categories).map((category) => { 
         return (
             <option  
                 value={category.categoryNum} 
@@ -16,18 +16,20 @@ const RestaurantAddForm = props => {
                 {category.categoryName}
             </option>
         )
-    })
-  //  console.log(props)
-   // const currentRestaurantName = props.currentRestaurant
-  //  console.log(currentCategoryName)
+    }) 
     const [showButton, setShowButton] = useState(true);
     const [restaurantName, setRestaurantName] = useState("");
     const [restaurantAddress, setRestaurantAddress] = useState("");
     const [associatedCategory, setAssociatedCategory] = useState("");
     const [message, setMessage] = useState("");  
+    const dispatch = useDispatch()
 
 
-    console.log(associatedCategory)
+    const addingRestaurant = () => {
+        setShowButton(false)
+        setMessage("")
+    }
+ 
     const handleSubmit = async e => {
           e.preventDefault();
           const newRestaurantName = {restaurantName}
@@ -39,24 +41,39 @@ const RestaurantAddForm = props => {
             'newRestaurantName'     :    newRestaurantName 
          };  
          console.log(newAssociatedCategory)
-        
-          const newRestaurant = await fetch(`/restaurants/addRestaurant`, {  
+
+         Geocode.setApiKey("AIzaSyByvZEhbhUOwuNnMkiOmz6LRDG9hmz2BnM")
+         Geocode.enableDebug();
+         const address = newRestaurantAddress.restaurantAddress; 
+         console.log(address)
+         Geocode.fromAddress(address).then(
+           (response) => {  
+             console.log(response.status) 
+           },
+           (error) => {
+             console.error(`error:${error}`); 
+             setMessage("invalid address")
+             return; 
+             console.log(error.status)
+           }
+         ); 
+
+          const newRestaurant = await fetch(`/restaurants`, {  
           method:'POST',
           headers: {"content-type":"application/json"}, 
           body: JSON.stringify({newRestaurantsInfo}) 
     })
-     try{
-            //await newCategory();
+     try{ 
             setRestaurantName(""); 
             setRestaurantAddress("");  
-            setMessage("updated successfully");
             setShowButton(true)
+            setMessage("Restaurant Added!")
             const response = await axios
-            .get('/restaurants/getRestaurants') 
+            .get('/restaurants') 
             .catch((err) => {
                 console.log("err",err)
-            })
-            setRestaurant(response.data); 
+            }) 
+            dispatch(setRestaurant(response.data));  
         } 
         catch (err){
             setMessage(`There was an issue: ${err}`);
@@ -68,7 +85,7 @@ const RestaurantAddForm = props => {
     return(
         <div>
             {showButton ? 
-            <button className="ui button" onClick={()=> setShowButton(false) }>Add Restaurant</button>
+            <button className="ui button" onClick={()=> addingRestaurant() } >Add Restaurant</button>
             :
             <form onSubmit={handleSubmit}>
                 <div>

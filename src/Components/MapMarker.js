@@ -1,11 +1,10 @@
-import GoogleMapReact from 'google-map-react';
+import React from 'react'
 
-
-const Marker = props => {
+const Marker = props => { 
     return <>
       <div className="pin"></div>
       <div className="pulse"></div>
-      <div className="label">{props.currentLabel!=props.label?props.label:''}</div>
+      <div className="label">{props.currentLabel!==props.label?props.label:''}</div>
     </>
   }
   

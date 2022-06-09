@@ -1,32 +1,27 @@
-import React, {Component, useEffect, useState} from 'react'; 
+import React, { useEffect, useState} from 'react'; 
 import {  useDispatch, connect } from 'react-redux';
 import { selectRestaurant, setRestaurant} from '../actions'; 
 import '../App.css';
 import axios from 'axios';
-import RestaurantOptions from './RestaurantOptions';
-import RestaurantBookForm from './RestaurantBookForm';
+import RestaurantOptions from './RestaurantOptions'; 
  
 const RestaurantDropdown = props => {
     const dispatch = useDispatch();  
     const [currentRestaurant, setCurrentRestaurant] = useState(null)
 
-    console.log(props.currentRestaurant)
-
     const getRestaurants = async () => { 
         const response = await axios
-        .get('/restaurants/getRestaurants') 
+        .get('/restaurants') 
         .catch((err) => {
             console.log("err",err)
-        }) 
-       // console.log(response.data)
+        })  
         dispatch(setRestaurant(response.data));
     }
     useEffect(() => {
         getRestaurants()
-        setCurrentRestaurant(props.currentRestaurant)
-        console.log("should go to new funciton")
+        setCurrentRestaurant(props.currentRestaurant) 
     },[props.selectedCategoryNum])  
-    console.log(props)
+ 
     if(!props.selectedCategoryNum){
         return<div>Please select a category</div>
     }
@@ -41,10 +36,9 @@ const RestaurantDropdown = props => {
         setCurrentRestaurant(restaurantNum)
     }   
       const renderOptions =(props.restaurants).map(restaurant => {
-          console.log(restaurant)  
           return(
             <option 
-            className={props.selectedCategoryNum.categoryNum > 0 && props.selectedCategoryNum.categoryNum != restaurant.categoryNum ?'hide':'show'} 
+            className={props.selectedCategoryNum.categoryNum > 0 && props.selectedCategoryNum.categoryNum == restaurant.categoryNum ?'show':'hide'} 
             key={restaurant.restaurantNum}
             value={restaurant.restaurantNum}
             address={restaurant.address}
@@ -54,12 +48,11 @@ const RestaurantDropdown = props => {
             id={restaurant._id} >{restaurant.name}
             </option> 
           )
-        }) 
-        console.log(currentRestaurant)
+        })  
         return( 
             <div>      
-                <label>Select a Restaurant</label>
-                <select value={!currentRestaurant?'-1':currentRestaurant} onChange={e=>handleRestaurantChange(e)}>
+                <label className="ui label">Select a Restaurant</label>
+                <select class="ui dropdown" value={!currentRestaurant?'-1':currentRestaurant} onChange={e=>handleRestaurantChange(e)}>
                     <option value='-1'>(Select One)</option>
                     {renderOptions} 
                 </select>      

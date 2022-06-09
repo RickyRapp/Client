@@ -9,8 +9,7 @@ const initialRState =  {
   restaurants: []
 }; 
 
-const categoryReducer = (state=initialCState, {type, payload}) => {
-  console.log(type)
+const categoryReducer = (state=initialCState, {type, payload}) => { 
   switch (type){
       case 'SET_CATEGORY':
           return {...state, categories:payload}
