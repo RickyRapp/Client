@@ -1,5 +1,4 @@
-import React, { useState} from 'react';
-import GoogleMapReact from 'google-map-react';
+import React, { useState} from 'react'; 
 import { useDispatch, connect } from 'react-redux';  
 import { setRestaurant, updateRestaurant} from '../actions'; 
 import axios from 'axios'
@@ -20,10 +19,11 @@ const RestaurantAddForm = props => {
     const [showButton, setShowButton] = useState(true);
     const [restaurantName, setRestaurantName] = useState("");
     const [restaurantAddress, setRestaurantAddress] = useState("");
-    const [associatedCategory, setAssociatedCategory] = useState("");
+    const [associatedCategory, setAssociatedCategory] = useState(props.currentCategory.categoryNum);
     const [message, setMessage] = useState("");  
     const dispatch = useDispatch()
 
+    console.log(restaurantAddress)
 
     const addingRestaurant = () => {
         setShowButton(false)
@@ -32,19 +32,19 @@ const RestaurantAddForm = props => {
  
     const handleSubmit = async e => {
           e.preventDefault();
-          const newRestaurantName = {restaurantName}
-          const newRestaurantAddress = {restaurantAddress}
-          const newAssociatedCategory = {associatedCategory}
+          const newRestaurantName = restaurantName
+          const newRestaurantAddress = restaurantAddress
+          const newAssociatedCategory = associatedCategory
+          console.log(associatedCategory)
           const newRestaurantsInfo =  {
             'newRestaurantAddress'  :    newRestaurantAddress,
             'newAssociatedCategory' :    newAssociatedCategory,
             'newRestaurantName'     :    newRestaurantName 
-         };  
-         console.log(newAssociatedCategory)
+         };   
 
          Geocode.setApiKey("AIzaSyByvZEhbhUOwuNnMkiOmz6LRDG9hmz2BnM")
          Geocode.enableDebug();
-         const address = newRestaurantAddress.restaurantAddress; 
+         const address = restaurantAddress; 
          console.log(address)
          Geocode.fromAddress(address).then(
            (response) => {  
@@ -58,7 +58,7 @@ const RestaurantAddForm = props => {
            }
          ); 
 
-          const newRestaurant = await fetch(`/restaurants`, {  
+          const newRestaurant = await fetch(`https://restaurant-selections.herokuapp.com/restaurants`, {  
           method:'POST',
           headers: {"content-type":"application/json"}, 
           body: JSON.stringify({newRestaurantsInfo}) 
@@ -69,7 +69,7 @@ const RestaurantAddForm = props => {
             setShowButton(true)
             setMessage("Restaurant Added!")
             const response = await axios
-            .get('/restaurants') 
+            .get('https://restaurant-selections.herokuapp.com/restaurants') 
             .catch((err) => {
                 console.log("err",err)
             }) 
@@ -122,6 +122,7 @@ const RestaurantAddForm = props => {
         return {
            currentRestaurant: state.currentRestaurant,
            categories: state.categories.categories ,
+           currentCategory: state.currentCategory ,
         } 
     }
     

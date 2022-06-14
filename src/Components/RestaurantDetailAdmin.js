@@ -18,8 +18,9 @@ const RestaurantDetailsAdmin = props => {
             return;
         }
         const restaurantNum = props.currentRestaurant.restaurantNum 
+        console.log(restaurantNum)
         const response = await axios
-        .get(`/bookings?restaurantNum=${restaurantNum}`) 
+        .get(`https://restaurant-selections.herokuapp.com/bookings?restaurantNum=${restaurantNum}`) 
         .catch((err) => {
             console.log("err",err)
         }) 

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { useSelector, useDispatch, connect } from 'react-redux';  
+import {  connect } from 'react-redux';  
 import { updateRestaurant, setRestaurant} from '../actions'; 
 import axios from 'axios'
 import Geocode from "react-geocode"; 
@@ -40,9 +40,9 @@ const RestaurantEditForm = props => {
           const newRestaurantAddress = restaurantAddress
           const newAssociatedCategory = associatedCategory
           const newRestaurantsInfo =  {
-            'newRestaurantAddress'  :    newRestaurantAddress,
-            'newAssociatedCategory' :    newAssociatedCategory,
-            'newRestaurantName'     :    newRestaurantName 
+            'address'  :    newRestaurantAddress,
+            'categoryNum' :    newAssociatedCategory,
+            'name'     :    newRestaurantName 
          };   
          
          Geocode.setApiKey("AIzaSyByvZEhbhUOwuNnMkiOmz6LRDG9hmz2BnM")
@@ -55,27 +55,27 @@ const RestaurantEditForm = props => {
            (error) => {
              console.error(`error:${error}`); 
              setMessage("invalid address")
-             return; 
-             console.log(error.status)
+             return;  
            }
          ); 
         
-          const newRestaurant = await fetch(`/restaurants/${id}`, {  
-          method:'PATCH',
-          headers: {"content-type":"application/json"}, 
-          body: JSON.stringify(newRestaurantsInfo) 
-    })
      try{
+            const newRestaurant = await fetch(`https://restaurant-selections.herokuapp.com/restaurants/${id}`, {  
+            method:'PATCH',
+            headers: {"content-type":"application/json"}, 
+            body: JSON.stringify(newRestaurantsInfo) 
+            })
             //await newCategory();
             setRestaurantName(""); 
             setRestaurantAddress("");  
-            setMessage("updated successfully");
+            //setMessage("updated successfully");
             setShowButton(true)            
             const response = await axios
-            .get('/restaurants') 
+            .get('https://restaurant-selections.herokuapp.com/restaurants') 
             .catch((err) => {
                 console.log("err",err)
             })
+            console.log(response.data)
             setRestaurant(response.data);
         } 
         catch (err){

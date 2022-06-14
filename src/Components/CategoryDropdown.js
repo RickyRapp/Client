@@ -6,12 +6,14 @@ import { setCategory, selectCategory, selectRestaurant } from '../actions';
 
 const CategoryDropDown = props =>  { 
     const dispatch = useDispatch(); 
+ 
     const getCategories = async () => { 
         const response = await axios
-        .get('/categories') 
+        .get('https://restaurant-selections.herokuapp.com/categories') 
         .catch((err) => {
             console.log("err",err)
         }) 
+        console.log(response.data)
         dispatch(setCategory(response.data));
     }
     useEffect(() => { 
@@ -60,6 +62,7 @@ const mapDispatchToProps = (dispatch) => ({
         const id=e.target.childNodes[e.target.selectedIndex].getAttribute('id') 
         const categoryNum=e.target.childNodes[e.target.selectedIndex].getAttribute('value') 
         const categoryName=e.target.childNodes[e.target.selectedIndex].innerHTML  
+        console.log(`selected category ${categoryNum}`)
         dispatch(selectCategory({categoryNum, id, categoryName}))
         dispatch(selectRestaurant(null))
       }    

@@ -2,7 +2,7 @@ import React from "react";
 import DropDownNew from './DropDownNew'; 
 import RestaurantDetailAdmin from "./RestaurantDetailAdmin";
  
-const AdminInfo = () => {
+const AdminInfo = () => { 
     return(
         <div>
             <br />

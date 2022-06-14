@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {  useDispatch, connect } from 'react-redux';  
 import { setCategory, updateCategories } from '../actions'; 
 import axios from 'axios';
+import '../App.css';
 
 const CategoryEditForm = props => {
      
@@ -21,7 +22,7 @@ const CategoryEditForm = props => {
           const categoryName = category
           const id=props.currentCategory.id 
         
-          const newCategory = await fetch(`/categories/${id}`, {
+          const newCategory = await fetch(`https://restaurant-selections.herokuapp.com/categories/${id}`, {
           method:'PATCH', 
           headers: {"content-type":"application/json"}, 
           body: JSON.stringify({categoryName}) 
@@ -32,7 +33,7 @@ const CategoryEditForm = props => {
             setMessage("updated successfully");
             setShowButton(true)
             const response = await axios
-            .get('/categories') 
+            .get('https://restaurant-selections.herokuapp.com/categories') 
             .catch((err) => {
                 console.log("err",err)
             }) 

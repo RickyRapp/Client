@@ -11,28 +11,26 @@ const RestaurantDetailsUser = props=> {
 
     const handleSubmit = async e => {
         e.preventDefault();
-        const newReservationName = name
-        const newReservationDate = startDate
-        const newReservationRestaurantNum = props.currentRestaurant.restaurantNum
+        const reservationName = name
+        const date = startDate
+        const restaurantNum = props.currentRestaurant.restaurantNum
 
 
-       if(newReservationRestaurantNum===''){ 
+       if(restaurantNum===''){ 
            return;
        }
       
-        const newBooking = await fetch(`/bookings`, {  
+        const newBooking = await fetch(`https://restaurant-selections.herokuapp.com/bookings`, {  
         method:'POST',
-        headers: {"content-type":"application/json"}, 
-      //  headers: {"accepts":"application/json"}, 
+        headers: {"content-type":"application/json"},  
         body: JSON.stringify({ 
-            newReservationName,
-            newReservationDate,
-            newReservationRestaurantNum }) 
-  })
+            reservationName,
+            date,
+            restaurantNum }) 
+   })
    try{ 
           setName(""); 
-          setStartDate("");  
-        //  setMessage("updated successfully");
+          setStartDate("");   
           setShowButton(true) 
       } 
       catch (err){
