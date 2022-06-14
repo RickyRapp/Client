@@ -1,20 +1,21 @@
 // Action creator 
-import axios from 'axios'; 
+import axios from 'axios';  
 
 export  const deleteCategories = async id => { 
-  await axios.delete(`/categories/${id}`) 
+  await axios.delete(`https://restaurant-selections.herokuapp.com/categories/${id}`) 
   .catch((err) => {
       console.log("err",err)
-  })  
+  })   
+  removeSelectedCategory(id);
 }
 export  const deleteRestaurant = async id => { 
-  await axios.delete(`/restaurants/${id}`) 
+  await axios.delete(`https://restaurant-selections.herokuapp.com/restaurants/${id}`) 
   .catch((err) => {
       console.log("err",err)
   })  
 }
 export  const updateCategories = async (id, category) => { 
-  await axios.patch(`/categories/${id}`, { 
+  await axios.patch(`https://restaurant-selections.herokuapp.com/categories/${id}`, { 
     headers: {"content-type":"application/json"},
     body: JSON.stringify(category) 
 }) 
@@ -23,7 +24,7 @@ export  const updateCategories = async (id, category) => {
   })  
 }
 export  const updateRestaurant = async (id, restaurant) => { 
-  await axios.patch(`/restaurants/${id}`, { 
+  await axios.patch(`https://restaurant-selections.herokuapp.com/restaurants/${id}`, { 
     headers: {"content-type":"application/json"},
     body: JSON.stringify(restaurant) 
 }) 
@@ -34,7 +35,7 @@ export  const updateRestaurant = async (id, restaurant) => {
 
 export  const getBookings = async () => {
   const response = await axios
-  .get('/bookings') 
+  .get('https://restaurant-selections.herokuapp.com/bookings') 
   .catch((err) => {
       console.log("err",err)
   })
@@ -52,7 +53,7 @@ export  const getCategories = async () => {
 
 export  const getRestaurants= async () => {
   const response = await axios
-  .get('/restaurants') 
+  .get('https://restaurant-selections.herokuapp.com/restaurants') 
   .catch((err) => {
       console.log("err",err)
   })
@@ -74,7 +75,7 @@ export const removeSelectedCategory = category => {
 
 export const removeCategory = (id) => { 
   return (dispatch) => {
-      axios.delete(`http://localhost:3001/categories/${id}`)
+      axios.delete(`https://restaurant-selections.herokuapp.com/categories/${id}`)
           .then(response => {  
               dispatch(removeSelectedCategory(id));
               dispatch(setCategory());
