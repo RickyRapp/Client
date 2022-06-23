@@ -39,12 +39,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({ 
     deleteCategories: async (category) => {
         dispatch(deleteCategories(category)) 
-        const response = await axios
-        .get('/categories/getCategories') 
-        .catch((err) => {
-            console.log("err",err)
-        }) 
-        dispatch(setCategory(response.data)); 
     } 
 })
 export default connect(mapStateToProps, mapDispatchToProps)(CategoryOptions)

@@ -15,7 +15,7 @@ const CategoryAddForm = props => {
           const categoryName = {category}
           console.log(categoryName)
         
-            const newCategory = await fetch('http://localhost:3001/categories', {
+            const newCategory = await fetch('https://restaurant-selections.herokuapp.com/categories', {
             method:'POST',
             headers: {"content-type":"application/json"},
             body: JSON.stringify(categoryName) 
@@ -26,12 +26,12 @@ const CategoryAddForm = props => {
             setMessage("Created successfully"); 
             setShowButton(true)
            const response = await axios
-           .get('/categories') 
+           .get('https://restaurant-selections.herokuapp.com/categories') 
            .catch((err) => {
                console.log("err",err)
            }) 
            dispatch(setCategory(response.data)); 
-        } 
+        }  
         catch (err){
             setMessage(`There was an issue: ${err}`);
         }

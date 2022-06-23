@@ -1,9 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Link from './Link'
-import {connect} from 'react-redux'; 
+import {connect, useDispatch} from 'react-redux'; 
+import { selectLoggedIn } from '../actions';
 
 const Header = props => {   
-    const currentPath = window.location.pathname.slice(1)
+ 
+    const currentPath = window.location.pathname.slice(1) 
+    const dispatch = useDispatch();  
+
+    useEffect(()=>{
+        const newLoggedInAs = !props.currentLoggedInAs?currentPath:props.currentLoggedInAs
+        dispatch(selectLoggedIn({type: 'LOGGED_IN', payload: newLoggedInAs}))
+    })  
+
+    console.log(props.currentLoggedInAs)
+
     return(  
         <div style={{textAlign:'center'}}>   
             <br />
@@ -26,5 +37,6 @@ const mapStateToProps = state => {
         currentLoggedInAs: state.currentLoggedInAs
     }
 };  
+  
 
 export default connect(mapStateToProps)(Header);

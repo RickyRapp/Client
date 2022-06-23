@@ -1,9 +1,9 @@
 import React, { useEffect, useState} from 'react'; 
+import RestaurantOptions from './RestaurantOptions'; 
 import {  useDispatch, connect } from 'react-redux';
+import axios from 'axios';
 import { selectRestaurant, setRestaurant} from '../actions'; 
 import '../App.css';
-import axios from 'axios';
-import RestaurantOptions from './RestaurantOptions'; 
  
 const RestaurantDropdown = props => {
     const dispatch = useDispatch();  
@@ -11,10 +11,10 @@ const RestaurantDropdown = props => {
 
     const getRestaurants = async () => { 
         const response = await axios
-        .get('/restaurants') 
+        .get('https://restaurant-selections.herokuapp.com/restaurants') 
         .catch((err) => {
             console.log("err",err)
-        })  
+        }) 
         dispatch(setRestaurant(response.data));
     }
     useEffect(() => {
@@ -35,7 +35,8 @@ const RestaurantDropdown = props => {
         dispatch(selectRestaurant(e.target.value==='(Select One)' ? null : {restaurantNum, id, address, categoryNum, name }))
         setCurrentRestaurant(restaurantNum)
     }   
-      const renderOptions =(props.restaurants).map(restaurant => {
+      const renderOptions =(props.restaurants).map(restaurant => { 
+          
           return(
             <option 
             className={props.selectedCategoryNum.categoryNum > 0 && props.selectedCategoryNum.categoryNum == restaurant.categoryNum ?'show':'hide'} 

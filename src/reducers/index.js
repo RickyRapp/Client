@@ -1,5 +1,4 @@
 import { combineReducers } from 'redux';
-import { actionTypes } from '../actions/Action-types';
 
 const initialCState =  {
   categories: []
@@ -27,7 +26,7 @@ const restaurantReducer = (state=initialRState, {type, payload}) => {
       case 'SET_RESTAURANT':
           return {...state, restaurants:payload}
       case "REMOVE_SELECTED_RESTAURANT":
-          return {...state, restaurants: state.restaurants.filter((el) => el.id !== payload)} 
+          return {...state, restaurants: state.restaurants.filter((el) => el._id !== payload)} 
       case "ADD_SELECTED_CATEGORY":
           return {...state, restaurants:state.restaurants, ...payload}
       default:

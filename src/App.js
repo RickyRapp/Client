@@ -11,7 +11,7 @@ const App = () => {
     <div>   
       <Header />
       <Route path="/">
-        <div>Welcome!</div>
+        <div className='ui header' style={{textAlign:"center"}}>Welcome!</div>
       </Route>
       <Route path="/user">
         <UserInfo />
