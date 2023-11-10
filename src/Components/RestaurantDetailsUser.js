@@ -29,7 +29,7 @@ const RestaurantDetailsUser = props=> {
            return;
        }
       
-        const newBooking = await fetch(`https://restaurant-selections.herokuapp.com/bookings`, {  
+        const newBooking = await fetch(`https://restaurant-selections-b8057e6dc592.herokuapp.com/bookings`, {  
         method:'POST',
         headers: {"content-type":"application/json"},  
         body: JSON.stringify({ 
