@@ -13,12 +13,12 @@ const CategoryOptions = props => {
     function AdminOptions(){
 
         const deleteCategoriesNew = async id => { 
-            await axios.delete(`https://restaurant-selections.herokuapp.com/categories/${id}`) 
+            await axios.delete(`https://restaurant-selections-b8057e6dc592.herokuapp.com/categories/${id}`) 
             .catch((err) => {
                 console.log("err",err)
             })           
             const response = await axios
-            .get('https://restaurant-selections.herokuapp.com/categories') 
+            .get('https://restaurant-selections-b8057e6dc592.herokuapp.com/categories') 
             .catch((err) => {
              console.log("err",err)
             }) 

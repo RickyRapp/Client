@@ -37,7 +37,7 @@ const CategoryEditForm = props => {
             return;
           }
         
-          await fetch(`https://restaurant-selections.herokuapp.com/categories/${id}`, {
+          await fetch(`https://restaurant-selections-b8057e6dc592.herokuapp.com/categories/${id}`, {
           method:'PATCH', 
           headers: {"content-type":"application/json"}, 
           body: JSON.stringify({categoryName}) 
@@ -48,7 +48,7 @@ const CategoryEditForm = props => {
         setCurrentStatus("success");  
         setShowStatus(true)   
         const response = await axios
-        .get('https://restaurant-selections.herokuapp.com/categories') 
+        .get('https://restaurant-selections-b8057e6dc592.herokuapp.com/categories') 
         .catch((err) => {
          console.log("err",err)
         }) 
