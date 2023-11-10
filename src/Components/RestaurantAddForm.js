@@ -65,7 +65,7 @@ const RestaurantAddForm = props => {
                return;
            }
 
-            await fetch(`https://restaurant-selections.herokuapp.com/restaurants`, {  
+            await fetch(`https://restaurant-selections-b8057e6dc592.herokuapp.com/restaurants`, {  
                 method:'POST',
                 headers: {"content-type":"application/json"}, 
                 body: JSON.stringify(newRestaurantsInfo) 
@@ -78,7 +78,7 @@ const RestaurantAddForm = props => {
                 setCurrentStatus("success"); 
                 setShowStatus(true)
                 const response = await axios
-                .get(`https://restaurant-selections.herokuapp.com/restaurants?categoryNum=${props.currentCategory?props.currentCategory.categoryNum:''}`) 
+                .get(`https://restaurant-selections-b8057e6dc592.herokuapp.com/restaurants?categoryNum=${props.currentCategory?props.currentCategory.categoryNum:''}`) 
                 .catch((err) => {
                     console.log("err",err)
                 }) 
