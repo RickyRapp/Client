@@ -37,7 +37,7 @@ const CategoryEditForm = props => {
             return;
           }
         
-          await fetch(`https://restaurant-selections.herokuapp.com/categories/${id}`, {
+          await fetch(`https://restaurant-selections-b8057e6dc592.herokuapp.com/categories/${id}`, {
           method:'PATCH', 
           headers: {"content-type":"application/json"}, 
           body: JSON.stringify({categoryName}) 
