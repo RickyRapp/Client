@@ -23,13 +23,6 @@ const CategoryDropDown = props =>  {
     const setOption = (props.categories).map((category) => { 
         return (
             <option  
-                value=3
-                id=3
-                key=3
-                >
-                Kosher
-            </option>
-            <option  
                 value={category.categoryNum}
                 id={category._id}
                 key={category._id}
