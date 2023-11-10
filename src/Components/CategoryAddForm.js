@@ -27,7 +27,7 @@ const CategoryAddForm = props => {
             return;
           } 
         
-          const newCategory = await fetch('https://restaurant-selections.herokuapp.com/categories', {
+          const newCategory = await fetch('https://restaurant-selections-b8057e6dc592.herokuapp.com/categories', {
           method:'POST',
           headers: {"content-type":"application/json"},
           body: JSON.stringify(categoryName) 
